@@ -1,0 +1,67 @@
+# Microservicios
+# Ignorar archivos y directorios generados dentro de cada microservicio
+ms-core-fin-cuentas-movimientos/HELP.md
+ms-core-fin-cuentas-movimientos/src/main/target/
+ms-core-fin-cuentas-movimientos/src/test/target/
+ms-core-fin-cuentas-movimientos/target/
+ms-core-fin-cuentas-movimientos/.mvn/
+
+ms-core-persona-cliente/HELP.md
+ms-core-persona-cliente/src/main/target/
+ms-core-persona-cliente/src/test/target/
+ms-core-persona-cliente/target/
+ms-core-persona-cliente/.mvn/
+
+db-repositorio-financiero/HELP.md
+db-repositorio-financiero/src/main/target/
+db-repositorio-financiero/src/test/target/
+db-repositorio-financiero/target/
+db-repositorio-financiero/.mvn/
+
+# Excepciones: incluir Maven Wrapper para cada microservicio
+!ms-core-fin-cuentas-movimientos/.mvn/wrapper/maven-wrapper.jar
+!ms-core-fin-cuentas-movimientos/.mvn/wrapper/maven-wrapper.properties
+!ms-core-persona-cliente/.mvn/wrapper/maven-wrapper.jar
+!ms-core-persona-cliente/.mvn/wrapper/maven-wrapper.properties
+
+### STS ###
+.apt_generated
+.classpath
+.factorypath
+.project
+.settings
+.springBeans
+.sts4-cache
+
+### IntelliJ IDEA ###
+.idea
+*.iws
+*.iml
+*.ipr
+ms-core-fin-cuentas-movimientos/.idea/
+ms-core-fin-cuentas-movimientos/*.iws
+ms-core-fin-cuentas-movimientos/*.iml
+ms-core-fin-cuentas-movimientos/*.ipr
+
+ms-core-persona-cliente/.idea/
+ms-core-persona-cliente/*.iws
+ms-core-persona-cliente/*.iml
+ms-core-persona-cliente/*.ipr
+
+db-repositorio-financiero/.idea/
+db-repositorio-financiero/*.iws
+db-repositorio-financiero/*.iml
+db-repositorio-financiero/*.ipr
+
+### NetBeans ###
+/nbproject/private/
+/nbbuild/
+/dist/
+/nbdist/
+/.nb-gradle/
+build/
+!**/src/main/**/build/
+!**/src/test/**/build/
+
+### VS Code ###
+.vscode/

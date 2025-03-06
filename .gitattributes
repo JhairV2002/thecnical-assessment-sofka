@@ -1,0 +1,5 @@
+ms-core-fin-cuentas-movimientos/mvnw text eol=lf
+ms-core-fin-cuentas-movimientos/*.cmd text eol=crlf
+
+ms-core-persona-cliente/mvnw text eol=lf
+ms-core-persona-cliente/*.cmd text eol=crlf
