@@ -1,14 +1,15 @@
 package ms.core.persona.cliente.unit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import db.repositorio.financiero.dtos.ClienteDTO;
-import db.repositorio.financiero.entity.Cliente;
-import db.repositorio.financiero.enums.Genero;
 import ms.core.persona.cliente.base.GenericResponse;
 import ms.core.persona.cliente.controller.ClienteController;
 import ms.core.persona.cliente.customExceptions.InvalidFieldException;
 import ms.core.persona.cliente.customExceptions.RecordAlreadyExistsException;
 import ms.core.persona.cliente.customExceptions.RecordNotFoundException;
+import ms.core.persona.cliente.dtos.req.ClienteReqDTO;
+import ms.core.persona.cliente.dtos.res.ClienteResDTO;
+import ms.core.persona.cliente.entity.Cliente;
+import ms.core.persona.cliente.enums.Genero;
 import ms.core.persona.cliente.service.impl.ClienteServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -41,8 +42,8 @@ class ClienteControllerTests {
     private MockMvc mockMvc;
     private ObjectMapper objectMapper;
     private Cliente cliente;
-    private ClienteDTO clienteDTO;
-    private GenericResponse<ClienteDTO> successResponse;
+    private ClienteResDTO clienteDTO;
+    private GenericResponse<ClienteResDTO> successResponse;
     private GenericResponse<String> deleteSuccessResponse;
 
     @BeforeEach
@@ -62,7 +63,7 @@ class ClienteControllerTests {
         cliente.setContrasenia("securePass123");
         cliente.setEstado(true);
 
-        clienteDTO = new ClienteDTO();
+        clienteDTO = new ClienteResDTO();
         clienteDTO.setIdentificacion("1717171712");
         clienteDTO.setNombres("Juan Pérez");
         clienteDTO.setGenero(Genero.MASCULINO);
@@ -70,7 +71,7 @@ class ClienteControllerTests {
         clienteDTO.setDireccion("Calle Falsa 123");
         clienteDTO.setTelefono("1234567890");
 
-        successResponse = GenericResponse.<ClienteDTO>builder()
+        successResponse = GenericResponse.<ClienteResDTO>builder()
                 .status(HttpStatusCode.valueOf(HttpStatus.OK.value()))
                 .message("Success")
                 .payload(clienteDTO)
@@ -86,7 +87,7 @@ class ClienteControllerTests {
     @Test
     void save_Success_ReturnsSavedCliente() throws Exception {
         // Given
-        when(clienteService.save(any(Cliente.class))).thenReturn(successResponse);
+        when(clienteService.save(any(ClienteReqDTO.class))).thenReturn(successResponse);
 
         // When & Then
         mockMvc.perform(post("/clientes/create")
@@ -98,13 +99,13 @@ class ClienteControllerTests {
                 .andExpect(jsonPath("$.payload.identificacion", is("1717171712")))
                 .andExpect(jsonPath("$.payload.nombres", is("Juan Pérez")));
 
-        verify(clienteService, times(1)).save(any(Cliente.class));
+        verify(clienteService, times(1)).save(any(ClienteReqDTO.class));
     }
 
     @Test
     void save_ClienteAlreadyExists_ThrowsRecordAlreadyExistsException() throws Exception {
         // Given
-        when(clienteService.save(any(Cliente.class)))
+        when(clienteService.save(any(ClienteReqDTO.class)))
                 .thenThrow(new RecordAlreadyExistsException("Ya existe un cliente con la identificación: 1717171712"));
 
         // When & Then
@@ -115,14 +116,14 @@ class ClienteControllerTests {
                 .andExpect(jsonPath("$.status", is(HttpStatus.CONFLICT.value())))
                 .andExpect(jsonPath("$.message", is("Ya existe un cliente con la identificación: 1717171712")));
 
-        verify(clienteService, times(1)).save(any(Cliente.class));
+        verify(clienteService, times(1)).save(any(ClienteReqDTO.class));
     }
 
     @Test
     void save_InvalidIdentificacionLength_ThrowsInvalidFieldException() throws Exception {
         // Given
         cliente.setIdentificacion("12345678901"); // 11 caracteres
-        when(clienteService.save(any(Cliente.class)))
+        when(clienteService.save(any(ClienteReqDTO.class)))
                 .thenThrow(new InvalidFieldException("La identificación debe tener 10 números"));
 
         // When & Then
@@ -133,14 +134,14 @@ class ClienteControllerTests {
                 .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())))
                 .andExpect(jsonPath("$.message", is("La identificación debe tener 10 números")));
 
-        verify(clienteService, times(1)).save(any(Cliente.class));
+        verify(clienteService, times(1)).save(any(ClienteReqDTO.class));
     }
 
     @Test
     void save_NonNumericIdentificacion_ThrowsInvalidFieldException() throws Exception {
         // Given
         cliente.setIdentificacion("not_a_number");
-        when(clienteService.save(any(Cliente.class)))
+        when(clienteService.save(any(ClienteReqDTO.class)))
                 .thenThrow(new InvalidFieldException("La identificación debe ser un número"));
 
         // When & Then
@@ -151,7 +152,7 @@ class ClienteControllerTests {
                 .andExpect(jsonPath("$.status", is(HttpStatus.BAD_REQUEST.value())))
                 .andExpect(jsonPath("$.message", is("La identificación debe ser un número")));
 
-        verify(clienteService, times(1)).save(any(Cliente.class));
+        verify(clienteService, times(1)).save(any(ClienteReqDTO.class));
     }
 
     @Test
@@ -190,7 +191,7 @@ class ClienteControllerTests {
     @Test
     void update_Success_ReturnsUpdatedClient() throws Exception {
         // Given
-        when(clienteService.update(any(ClienteDTO.class))).thenReturn(successResponse);
+        when(clienteService.update(any(ClienteReqDTO.class))).thenReturn(successResponse);
 
         // When & Then
         mockMvc.perform(put("/clientes/update")
@@ -201,13 +202,13 @@ class ClienteControllerTests {
                 .andExpect(jsonPath("$.message", is("Success")))
                 .andExpect(jsonPath("$.payload.identificacion", is("1717171712")));
 
-        verify(clienteService, times(1)).update(any(ClienteDTO.class));
+        verify(clienteService, times(1)).update(any(ClienteReqDTO.class));
     }
 
     @Test
     void update_ClientNotFound_ThrowsRecordNotFoundException() throws Exception {
         // Given
-        when(clienteService.update(any(ClienteDTO.class)))
+        when(clienteService.update(any(ClienteReqDTO.class)))
                 .thenThrow(new RecordNotFoundException("No se encontró el cliente con la identificación: 1717171712"));
 
         // When & Then
@@ -218,7 +219,7 @@ class ClienteControllerTests {
                 .andExpect(jsonPath("$.status", is(HttpStatus.NOT_FOUND.value())))
                 .andExpect(jsonPath("$.message", is("No se encontró el cliente con la identificación: 1717171712")));
 
-        verify(clienteService, times(1)).update(any(ClienteDTO.class));
+        verify(clienteService, times(1)).update(any(ClienteReqDTO.class));
     }
 
     @Test

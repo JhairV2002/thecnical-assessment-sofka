@@ -1,6 +1,7 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.controller.interfaces;
 
-import db.repositorio.financiero.entity.Cuenta;
+
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 

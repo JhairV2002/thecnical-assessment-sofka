@@ -1,8 +1,8 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces;
 
-import db.repositorio.financiero.entity.Movimiento;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.InsufficientFundsException;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Movimiento;
 
 import java.math.BigDecimal;
 import java.util.List;

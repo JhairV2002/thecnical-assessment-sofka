@@ -1,9 +1,9 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.controller.interfaces;
 
-import db.repositorio.financiero.entity.Movimiento;
 import jhair.vasquez.ms.core.cuentas.movimientos.base.GenericResponse;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.InsufficientFundsException;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Movimiento;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.MovimientosService;
 import lombok.AllArgsConstructor;
 import org.springframework.http.HttpStatus;

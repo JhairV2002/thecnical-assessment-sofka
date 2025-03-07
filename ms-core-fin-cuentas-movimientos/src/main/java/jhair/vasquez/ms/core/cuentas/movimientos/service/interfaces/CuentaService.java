@@ -1,7 +1,8 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces;
 
-import db.repositorio.financiero.entity.Cuenta;
+
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
 
 import java.util.List;
 

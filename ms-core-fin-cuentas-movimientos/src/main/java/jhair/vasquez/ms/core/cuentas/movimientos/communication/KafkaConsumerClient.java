@@ -1,10 +1,11 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.communication;
 
-import db.repositorio.financiero.dtos.ClienteLogicalDeleteDTO;
-import db.repositorio.financiero.dtos.ClienteResponseDTO;
-import db.repositorio.financiero.entity.Cuenta;
-import db.repositorio.financiero.repository.CuentaRepository;
+import com.fasterxml.jackson.databind.ObjectMapper;
 import jhair.vasquez.ms.core.cuentas.movimientos.cons.KafkaCons;
+import jhair.vasquez.ms.core.dto.kafka.common.ClienteKafkaDeleteDTO;
+import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.repository.CuentaRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -23,13 +24,14 @@ import java.util.concurrent.ConcurrentHashMap;
 @AllArgsConstructor
 public class KafkaConsumerClient {
     private final CuentaRepository cuentaRepository;
+    private final ObjectMapper objectMapper = new ObjectMapper();
 
 
-    private final Map<String, CompletableFuture<ClienteResponseDTO>> responseFutures = new ConcurrentHashMap<>();
+    private final Map<String, CompletableFuture<ClienteKafkaResDTO>> responseFutures = new ConcurrentHashMap<>();
     // Consumidor de respuestas
     @KafkaListener(topics = KafkaCons.TOPIC_RESPONSE, groupId = KafkaCons.GROUP_ID)
-    public void listenClienteResponse(ConsumerRecord<String, ClienteResponseDTO> record) {
-        ClienteResponseDTO response = record.value();
+    public void listenClienteResponse(ConsumerRecord<String, ClienteKafkaResDTO> record) {
+        ClienteKafkaResDTO response = record.value();
         String correlationId = response.getCorrelationId();
         log.info("Recibida respuesta de Kafka para correlationId: {}", correlationId);
         KafkaPetitionManager.getInstance().completeResponse(correlationId, response);
@@ -37,7 +39,7 @@ public class KafkaConsumerClient {
 
     @KafkaListener(topics = KafkaCons.TOPIC_ELIMINACION_LOGICA, groupId = KafkaCons.GROUP_ID)
     @Transactional
-    public void onClienteEliminacionLogica(ClienteLogicalDeleteDTO mensaje) {
+    public void onClienteEliminacionLogica(ClienteKafkaDeleteDTO mensaje) {
         Long clienteId = mensaje.getClienteId();
         log.info("Recibida notificación de eliminación lógica para clienteId: {}", clienteId);
 

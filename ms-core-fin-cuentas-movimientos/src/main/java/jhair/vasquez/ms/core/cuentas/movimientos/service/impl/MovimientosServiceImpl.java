@@ -1,19 +1,17 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.impl;
 
-import db.repositorio.financiero.entity.Cuenta;
-import db.repositorio.financiero.entity.Movimiento;
-import db.repositorio.financiero.repository.MovimientosRepository;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.InsufficientFundsException;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Movimiento;
+import jhair.vasquez.ms.core.cuentas.movimientos.repository.MovimientosRepository;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.CuentaService;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.MovimientosService;
 import jhair.vasquez.ms.core.cuentas.movimientos.utils.MovimientosUtils;
 import lombok.AllArgsConstructor;
 import org.springframework.stereotype.Service;
-import org.springframework.transaction.annotation.Transactional;
 
 import java.math.BigDecimal;
-import java.sql.Date;
 import java.util.List;
 
 @Service

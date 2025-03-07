@@ -1,10 +1,9 @@
 package ms.core.persona.cliente.controller;
-
-import db.repositorio.financiero.dtos.ClienteDTO;
-import db.repositorio.financiero.entity.Cliente;
 import lombok.AllArgsConstructor;
 import ms.core.persona.cliente.base.GenericResponse;
 import ms.core.persona.cliente.customExceptions.RecordNotFoundException;
+import ms.core.persona.cliente.dtos.req.ClienteReqDTO;
+import ms.core.persona.cliente.dtos.res.ClienteResDTO;
 import ms.core.persona.cliente.service.impl.ClienteServiceImpl;
 import org.springframework.web.bind.annotation.*;
 
@@ -18,17 +17,17 @@ public class ClienteController {
 
     @GetMapping("/userInfo")
     @ResponseBody
-    public GenericResponse<ClienteDTO> findById() throws RecordNotFoundException {
+    public GenericResponse<ClienteResDTO> findById() throws RecordNotFoundException {
         return clienteService.getClientInfo();
     }
 
     @PostMapping("/create")
-    public GenericResponse<ClienteDTO> save(@RequestBody Cliente cliente) throws Exception {
+    public GenericResponse<ClienteResDTO> save(@RequestBody ClienteReqDTO cliente) throws Exception {
         return clienteService.save(cliente);
     }
 
     @PutMapping("/update")
-    public GenericResponse<ClienteDTO> update(@RequestBody ClienteDTO cliente) throws Exception {
+    public GenericResponse<ClienteResDTO> update(@RequestBody ClienteReqDTO cliente) throws Exception {
         return clienteService.update(cliente);
     }
 

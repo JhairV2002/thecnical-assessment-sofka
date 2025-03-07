@@ -1,19 +1,14 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.impl;
 
-import db.repositorio.financiero.classes.Persona;
-import db.repositorio.financiero.dtos.ClienteRequestDTO;
-import db.repositorio.financiero.dtos.ClienteResponseDTO;
-import db.repositorio.financiero.entity.Cliente;
-import db.repositorio.financiero.entity.Cuenta;
-import db.repositorio.financiero.repository.ClienteRepository;
-import db.repositorio.financiero.repository.CuentaRepository;
-import jhair.vasquez.ms.core.cuentas.movimientos.communication.KafkaConsumerClient;
+
 import jhair.vasquez.ms.core.cuentas.movimientos.communication.KafkaProducerClient;
 import jhair.vasquez.ms.core.cuentas.movimientos.cons.CuentaCons;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.repository.CuentaRepository;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.CuentaService;
+import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
 import lombok.AllArgsConstructor;
-import org.springframework.kafka.core.KafkaTemplate;
 import org.springframework.stereotype.Service;
 
 import java.util.List;
@@ -23,7 +18,6 @@ import java.util.Random;
 @AllArgsConstructor
 public class CuentaServiceImpl implements CuentaService {
     private final CuentaRepository cuentaRepository;
-    private final ClienteRepository clienteRepository;
     // Kafka
     private final KafkaProducerClient kafkaClient;
 
@@ -45,8 +39,8 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public Cuenta save(Cuenta cuenta) throws RecordNotFound {
         // Valido cliente con kafka
-        ClienteResponseDTO clienteResponse = kafkaClient.fetchCliente(cuenta.getClienteId());
-        if (clienteResponse.getCliente() == null) {
+        ClienteKafkaResDTO clienteResponse = kafkaClient.fetchCliente(cuenta.getClienteId());
+        if (clienteResponse.getClienteId() == null) {
             throw new RecordNotFound("No se encontró el cliente con el id: " + cuenta.getClienteId());
         }
         cuenta.setNumCuenta(generateNumCuenta(CuentaCons.CANT_DIG_NUM_CUENTA));

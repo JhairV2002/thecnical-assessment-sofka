@@ -1,8 +1,8 @@
 package ms.core.persona.cliente.unit;
 
-import db.repositorio.financiero.entity.Cliente;
-import db.repositorio.financiero.enums.Genero;
-import db.repositorio.financiero.validators.ClienteValidator;
+import ms.core.persona.cliente.entity.Cliente;
+import ms.core.persona.cliente.enums.Genero;
+import ms.core.persona.cliente.validators.ClienteValidator;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.BeanPropertyBindingResult;

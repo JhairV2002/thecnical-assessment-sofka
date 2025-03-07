@@ -1,10 +1,8 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.controller;
 
-import db.repositorio.financiero.dtos.ReporteDTO;
-import db.repositorio.financiero.entity.Movimiento;
 import jhair.vasquez.ms.core.cuentas.movimientos.base.GenericResponse;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
-import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.MovimientosService;
+import jhair.vasquez.ms.core.cuentas.movimientos.dtos.res.ReporteDTO;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.ReportesService;
 import lombok.AllArgsConstructor;
 import org.springframework.format.annotation.DateTimeFormat;

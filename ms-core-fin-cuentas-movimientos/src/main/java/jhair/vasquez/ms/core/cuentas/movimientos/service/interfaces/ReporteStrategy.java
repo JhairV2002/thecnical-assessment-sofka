@@ -1,7 +1,7 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces;
 
-import db.repositorio.financiero.dtos.ReporteDTO;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.dtos.res.ReporteDTO;
 
 import java.util.Date;
 

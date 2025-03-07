@@ -1,6 +1,6 @@
 package jhair.vasquez.ms.core.cuentas.movimientos;
 
-import db.repositorio.financiero.entity.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;

@@ -1,15 +1,15 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.strategy.strategy;
 
-import db.repositorio.financiero.dtos.ClienteResponseDTO;
-import db.repositorio.financiero.dtos.CuentaConMovimientoDTO;
-import db.repositorio.financiero.dtos.ReporteDTO;
-import db.repositorio.financiero.entity.Cuenta;
-import db.repositorio.financiero.entity.Movimiento;
-import db.repositorio.financiero.repository.CuentaRepository;
-import db.repositorio.financiero.repository.MovimientosRepository;
 import jhair.vasquez.ms.core.cuentas.movimientos.communication.KafkaProducerClient;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.dtos.res.CuentaConMovimientoDTO;
+import jhair.vasquez.ms.core.cuentas.movimientos.dtos.res.ReporteDTO;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.entity.Movimiento;
+import jhair.vasquez.ms.core.cuentas.movimientos.repository.CuentaRepository;
+import jhair.vasquez.ms.core.cuentas.movimientos.repository.MovimientosRepository;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.ReporteStrategy;
+import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.stereotype.Component;
@@ -35,8 +35,8 @@ public class MovementsByAccountAndDateRangeStrategy implements ReporteStrategy {
 
         // Validar la existencia del cliente usando Kafka
         log.info("Validando existencia del cliente con ID: {}", clienteId);
-        ClienteResponseDTO clienteResponse = kafkaProducerClient.fetchCliente(clienteId);
-        if (clienteResponse.getCliente() == null) {
+        ClienteKafkaResDTO clienteResponse = kafkaProducerClient.fetchCliente(clienteId);
+        if (clienteResponse.getClienteId() == null) {
             log.warn("Cliente con ID {} no encontrado en ms-core-persona-cliente", clienteId);
             throw new RecordNotFound("No se encontró el cliente con ID: " + clienteId);
         }

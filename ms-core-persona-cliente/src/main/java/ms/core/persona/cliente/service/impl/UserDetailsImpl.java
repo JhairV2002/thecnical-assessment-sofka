@@ -1,19 +1,13 @@
 package ms.core.persona.cliente.service.impl;
 
-import db.repositorio.financiero.entity.Cliente;
-import db.repositorio.financiero.repository.ClienteRepository;
-import lombok.AllArgsConstructor;
+import ms.core.persona.cliente.entity.Cliente;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
-import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
-import org.springframework.stereotype.Service;
-
 import java.util.Collection;
 import java.util.List;
 
 public class UserDetailsImpl implements UserDetails {
-    private final Cliente cliente;
+    private final ms.core.persona.cliente.entity.Cliente cliente;
 
     UserDetailsImpl(Cliente cliente) {
         this.cliente = cliente;

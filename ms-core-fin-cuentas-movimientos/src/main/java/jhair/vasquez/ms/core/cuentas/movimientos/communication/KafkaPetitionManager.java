@@ -1,7 +1,7 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.communication;
 
 
-import db.repositorio.financiero.dtos.ClienteResponseDTO;
+import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
 import lombok.extern.slf4j.Slf4j;
 
 import java.util.Map;
@@ -11,7 +11,7 @@ import java.util.concurrent.ConcurrentHashMap;
 @Slf4j
 public class KafkaPetitionManager {
     private static final KafkaPetitionManager INSTANCE = new KafkaPetitionManager();
-    private final Map<String, CompletableFuture<ClienteResponseDTO>> responseFutures = new ConcurrentHashMap<>();
+    private final Map<String, CompletableFuture<ClienteKafkaResDTO>> responseFutures = new ConcurrentHashMap<>();
 
     // Constructor privado para evitar instanciación externa
     private KafkaPetitionManager() {}
@@ -22,16 +22,16 @@ public class KafkaPetitionManager {
     }
 
     // Registrar un nuevo future para una solicitud
-    public CompletableFuture<ClienteResponseDTO> registerResponse(String correlationId) {
-        CompletableFuture<ClienteResponseDTO> future = new CompletableFuture<>();
+    public CompletableFuture<ClienteKafkaResDTO> registerResponse(String correlationId) {
+        CompletableFuture<ClienteKafkaResDTO> future = new CompletableFuture<>();
         responseFutures.put(correlationId, future);
         log.debug("Registrado future para correlationId: {}", correlationId);
         return future;
     }
 
     // Completar un future cuando llega una respuesta
-    public void completeResponse(String correlationId, ClienteResponseDTO response) {
-        CompletableFuture<ClienteResponseDTO> future = responseFutures.remove(correlationId);
+    public void completeResponse(String correlationId, ClienteKafkaResDTO response) {
+        CompletableFuture<ClienteKafkaResDTO> future = responseFutures.remove(correlationId);
         if (future != null) {
             future.complete(response);
             log.debug("Completado future para correlationId: {}", correlationId);

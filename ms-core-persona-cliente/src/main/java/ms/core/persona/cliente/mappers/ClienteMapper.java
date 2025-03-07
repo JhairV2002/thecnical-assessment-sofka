@@ -1,17 +1,18 @@
 package ms.core.persona.cliente.mappers;
 
-import db.repositorio.financiero.dtos.ClienteDTO;
-import db.repositorio.financiero.entity.Cliente;
+import ms.core.persona.cliente.dtos.req.ClienteReqDTO;
+import ms.core.persona.cliente.dtos.res.ClienteResDTO;
+import ms.core.persona.cliente.entity.Cliente;
 import org.mapstruct.Mapper;
 import org.mapstruct.factory.Mappers;
-import org.springframework.stereotype.Component;
+
 import java.util.List;
 
 @Mapper(componentModel = "spring")
 public interface ClienteMapper {
     ClienteMapper clienteMapper = Mappers.getMapper(ClienteMapper.class);
 
-    ClienteDTO clienteToClienteDTO(Cliente cliente);
-    List<ClienteDTO> clienteListToClienteDTO(List<Cliente> clienteList);
-    Cliente clienteDTOToCliente(ClienteDTO clienteDTO);
+    ClienteResDTO clienteToClienteResDTO(Cliente cliente);
+    List<ClienteResDTO> clienteListToClienteResDTO(List<Cliente> clienteList);
+    Cliente clienteReqDTOToCliente(ClienteReqDTO clienteDTO);
 }

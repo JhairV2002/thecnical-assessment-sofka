@@ -1,9 +1,9 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.impl;
 
 
-import db.repositorio.financiero.dtos.ReporteDTO;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.InvalidStrategyException;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.dtos.res.ReporteDTO;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.ReporteStrategy;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.ReportesService;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.strategy.strategy.MovementsByAccountAndDateRangeStrategy;

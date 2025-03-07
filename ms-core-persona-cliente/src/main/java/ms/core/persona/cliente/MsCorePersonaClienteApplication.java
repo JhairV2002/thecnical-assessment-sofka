@@ -7,9 +7,6 @@ import org.springframework.context.annotation.ComponentScan;
 import org.springframework.data.jpa.repository.config.EnableJpaRepositories;
 
 @SpringBootApplication
-@ComponentScan(basePackages = {"ms.core.persona.cliente", "db.repositorio.financiero"})
-@EnableJpaRepositories(basePackages = {"db.repositorio.financiero.repository"})
-@EntityScan(basePackages = {"db.repositorio.financiero.entity"})
 public class MsCorePersonaClienteApplication {
 
     public static void main(String[] args) {

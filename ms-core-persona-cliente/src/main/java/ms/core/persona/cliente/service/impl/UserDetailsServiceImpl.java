@@ -1,8 +1,8 @@
 package ms.core.persona.cliente.service.impl;
 
-import db.repositorio.financiero.entity.Cliente;
-import db.repositorio.financiero.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
+import ms.core.persona.cliente.entity.Cliente;
+import ms.core.persona.cliente.repository.ClienteRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;

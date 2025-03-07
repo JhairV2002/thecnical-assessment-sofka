@@ -1,15 +1,16 @@
 package ms.core.persona.cliente.service.impl;
 
-import db.repositorio.financiero.dtos.ClienteDTO;
-import db.repositorio.financiero.entity.Cliente;
-import db.repositorio.financiero.repository.ClienteRepository;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import ms.core.persona.cliente.base.GenericResponse;
 import ms.core.persona.cliente.customExceptions.InvalidFieldException;
 import ms.core.persona.cliente.customExceptions.RecordAlreadyExistsException;
 import ms.core.persona.cliente.customExceptions.RecordNotFoundException;
+import ms.core.persona.cliente.dtos.req.ClienteReqDTO;
+import ms.core.persona.cliente.dtos.res.ClienteResDTO;
+import ms.core.persona.cliente.entity.Cliente;
 import ms.core.persona.cliente.mappers.ClienteMapper;
+import ms.core.persona.cliente.repository.ClienteRepository;
 import ms.core.persona.cliente.service.interfaces.ClienteService;
 import ms.core.persona.cliente.utils.impl.FiledsUtils;
 import ms.core.persona.cliente.utils.impl.JWTUtilsImpl;
@@ -39,7 +40,7 @@ public class ClienteServiceImpl implements ClienteService {
      * @throws RecordNotFoundException si no se encuentra un cliente con la identificación del usuario autenticado.
      */
     @Override
-    public GenericResponse<ClienteDTO> getClientInfo() {
+    public GenericResponse<ClienteResDTO> getClientInfo() {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String identificacion = authentication.getName();
 
@@ -56,10 +57,10 @@ public class ClienteServiceImpl implements ClienteService {
 
 
 
-        return GenericResponse.<ClienteDTO>builder()
+        return GenericResponse.<ClienteResDTO>builder()
                 .status(HttpStatusCode.valueOf(HttpStatus.OK.value()))
                 .message("Success")
-                .payload(clienteMapper.clienteToClienteDTO(cliente))
+                .payload(clienteMapper.clienteToClienteResDTO(cliente))
                 .build();
     }
 
@@ -73,7 +74,7 @@ public class ClienteServiceImpl implements ClienteService {
      * @throws Exception si ocurre un error inesperado durante el guardado.
      */
     @Override
-    public GenericResponse<ClienteDTO> save(Cliente cliente) throws Exception {
+    public GenericResponse<ClienteResDTO> save(ClienteReqDTO cliente) throws Exception {
         try{
             String identificacion = cliente.getIdentificacion();
             log.info("Intentando guardar cliente con identificación: {}", identificacion);
@@ -99,18 +100,20 @@ public class ClienteServiceImpl implements ClienteService {
                 throw new InvalidFieldException(errorMsg);
             }
 
-            Cliente savedCliente = clienteRepository.save(cliente);
+            Cliente clienteToSave = clienteMapper.clienteReqDTOToCliente(cliente);
+
+            Cliente savedCliente = clienteRepository.save(clienteToSave);
             log.info("Cliente guardado exitosamente: {}", savedCliente.getIdentificacion());
 
-            return GenericResponse.<ClienteDTO>builder()
+            return GenericResponse.<ClienteResDTO>builder()
                     .status(HttpStatusCode.valueOf(HttpStatus.OK.value()))
                     .message("Success")
-                    .payload(clienteMapper.clienteToClienteDTO(savedCliente))
+                    .payload(clienteMapper.clienteToClienteResDTO(savedCliente))
                     .build();
 
         } catch (Exception e){
             log.error("Error al guardar el cliente: {}", e.getMessage());
-            return GenericResponse.<ClienteDTO>builder()
+            return GenericResponse.<ClienteResDTO>builder()
                     .status(HttpStatusCode.valueOf(HttpStatus.INTERNAL_SERVER_ERROR.value()))
                     .message(e.getMessage())
                     .payload(null)
@@ -128,7 +131,7 @@ public class ClienteServiceImpl implements ClienteService {
      * @throws Exception si ocurre un error inesperado durante la actualización.
      */
     @Override
-    public GenericResponse<ClienteDTO> update(ClienteDTO clienteDTO) throws Exception {
+    public GenericResponse<ClienteResDTO> update(ClienteReqDTO clienteDTO) throws Exception {
         Authentication authentication = SecurityContextHolder.getContext().getAuthentication();
         String identificacion = authentication.getName();
 
@@ -152,8 +155,8 @@ public class ClienteServiceImpl implements ClienteService {
         Cliente updatedCliente = clienteRepository.save(clientToUpdate);
         log.info("Cliente actualizado exitosamente: {}", updatedCliente.getIdentificacion());
 
-        ClienteDTO updatedClienteDTO = clienteMapper.clienteToClienteDTO(updatedCliente);
-        return GenericResponse.<ClienteDTO>builder()
+        ClienteResDTO updatedClienteDTO = clienteMapper.clienteToClienteResDTO(updatedCliente);
+        return GenericResponse.<ClienteResDTO>builder()
                 .status(HttpStatusCode.valueOf(HttpStatus.OK.value()))
                 .message("Success")
                 .payload(updatedClienteDTO)

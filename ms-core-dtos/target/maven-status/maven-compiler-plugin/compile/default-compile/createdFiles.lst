@@ -1,0 +1,7 @@
+jhair/vasquez/ms/core/dto/kafka/common/ClienteKafkaReqDTO.class
+jhair/vasquez/ms/core/dto/kafka/common/ClienteKafkaReqDTO$ClienteKafkaReqDTOBuilder.class
+jhair/vasquez/ms/core/dto/kafka/persona/ClienteKafkaResDTO.class
+jhair/vasquez/ms/core/dto/kafka/persona/ClienteKafkaResDTO$ClienteKafkaResDTOBuilder.class
+jhair/vasquez/ms/core/dto/kafka/common/ClienteKafkaDeleteDTO.class
+jhair/vasquez/ms/core/dto/kafka/persona/ClienteKafkaDTO.class
+jhair/vasquez/ms/core/dto/kafka/common/ClienteKafkaDeleteDTO$ClienteKafkaDeleteDTOBuilder.class
