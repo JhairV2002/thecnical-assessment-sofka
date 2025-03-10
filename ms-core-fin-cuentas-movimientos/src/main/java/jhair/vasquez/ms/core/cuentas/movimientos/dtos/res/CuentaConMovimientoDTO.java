@@ -1,7 +1,7 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.dtos.res;
 
-import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
-import jhair.vasquez.ms.core.cuentas.movimientos.entity.Movimiento;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.domain.Movimiento;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;

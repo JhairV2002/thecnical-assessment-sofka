@@ -1,13 +1,13 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.service.strategy.strategy;
 
-import jhair.vasquez.ms.core.cuentas.movimientos.communication.KafkaProducerClient;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.infraestructure.communication.KafkaProducerClient;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.application.repository.CuentaRepository;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
 import jhair.vasquez.ms.core.cuentas.movimientos.dtos.res.CuentaConMovimientoDTO;
 import jhair.vasquez.ms.core.cuentas.movimientos.dtos.res.ReporteDTO;
-import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
-import jhair.vasquez.ms.core.cuentas.movimientos.entity.Movimiento;
-import jhair.vasquez.ms.core.cuentas.movimientos.repository.CuentaRepository;
-import jhair.vasquez.ms.core.cuentas.movimientos.repository.MovimientosRepository;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.application.repository.MovimientosRepository;
+import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.domain.Movimiento;
 import jhair.vasquez.ms.core.cuentas.movimientos.service.interfaces.ReporteStrategy;
 import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
 import lombok.AllArgsConstructor;
