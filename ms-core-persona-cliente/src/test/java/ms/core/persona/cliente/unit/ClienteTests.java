@@ -1,8 +1,9 @@
 package ms.core.persona.cliente.unit;
 
-import ms.core.persona.cliente.entity.Cliente;
-import ms.core.persona.cliente.enums.Genero;
-import ms.core.persona.cliente.validators.ClienteValidator;
+import ms.core.persona.cliente.cliente.domain.Cliente;
+import ms.core.persona.cliente.cliente.domain.ClienteValidator;
+import ms.core.persona.cliente.cliente.domain.Genero;
+import ms.core.persona.cliente.cliente.infraestructure.validators.ClienteValidatorImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.validation.BeanPropertyBindingResult;
@@ -13,13 +14,13 @@ import static org.junit.jupiter.api.Assertions.*;
 public class ClienteTests {
 
     private Cliente cliente;
-    private ClienteValidator validator;
+    private ClienteValidatorImpl validator;
     private Errors errors;
 
     @BeforeEach
     void setUp() {
         cliente = new Cliente();
-        validator = new ClienteValidator();
+        validator = new ClienteValidatorImpl();
         errors = new BeanPropertyBindingResult(cliente, "cliente");
     }
 

@@ -1,16 +1,16 @@
 package ms.core.persona.cliente.unit;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
-import ms.core.persona.cliente.base.GenericResponse;
-import ms.core.persona.cliente.controller.ClienteController;
-import ms.core.persona.cliente.customExceptions.InvalidFieldException;
-import ms.core.persona.cliente.customExceptions.RecordAlreadyExistsException;
-import ms.core.persona.cliente.customExceptions.RecordNotFoundException;
-import ms.core.persona.cliente.dtos.req.ClienteReqDTO;
-import ms.core.persona.cliente.dtos.res.ClienteResDTO;
-import ms.core.persona.cliente.entity.Cliente;
-import ms.core.persona.cliente.enums.Genero;
-import ms.core.persona.cliente.service.impl.ClienteServiceImpl;
+import ms.core.persona.cliente.domain.GenericResponse;
+import ms.core.persona.cliente.cliente.infraestructure.ClienteController;
+import ms.core.persona.cliente.application.exceptions.InvalidFieldException;
+import ms.core.persona.cliente.domain.customExceptions.RecordAlreadyExistsException;
+import ms.core.persona.cliente.domain.customExceptions.RecordNotFoundException;
+import ms.core.persona.cliente.cliente.infraestructure.dto.ClienteReqDTO;
+import ms.core.persona.cliente.cliente.infraestructure.dto.ClienteResDTO;
+import ms.core.persona.cliente.cliente.domain.Cliente;
+import ms.core.persona.cliente.cliente.domain.Genero;
+import ms.core.persona.cliente.cliente.application.ClienteServiceImpl;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.junit.jupiter.api.extension.ExtendWith;
