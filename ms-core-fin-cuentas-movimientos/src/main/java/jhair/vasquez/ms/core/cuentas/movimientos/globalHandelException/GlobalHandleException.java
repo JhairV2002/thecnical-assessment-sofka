@@ -1,7 +1,7 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.globalHandelException;
 
 import jhair.vasquez.ms.core.cuentas.movimientos.base.GenericResponse;
-import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.InsufficientFundsException;
+import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.domain.exception.InsufficientFundsException;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.InvalidStrategyException;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
 import org.springframework.http.HttpStatus;
