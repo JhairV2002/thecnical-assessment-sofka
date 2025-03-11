@@ -12,6 +12,6 @@ import java.io.Serializable;
 @AllArgsConstructor
 @NoArgsConstructor
 public class ClienteKafkaReqDTO implements Serializable {
-    private Long clienteId;
     private String correlationId;
+    private Long clienteId;
 }

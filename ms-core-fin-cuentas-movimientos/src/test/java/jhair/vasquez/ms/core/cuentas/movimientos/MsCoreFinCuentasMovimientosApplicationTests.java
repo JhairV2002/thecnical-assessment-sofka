@@ -1,6 +1,6 @@
 package jhair.vasquez.ms.core.cuentas.movimientos;
 
-import jhair.vasquez.ms.core.cuentas.movimientos.entity.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.infraestructure.repository.CuentaEntity;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -32,20 +32,20 @@ class MsCoreFinCuentasMovimientosApplicationTests {
     @Test
     void createCuenta_ValidClient_ReturnsSavedCuenta() throws Exception {
         // Arrange
-        Cuenta cuentaInput = new Cuenta();
-        //cuentaInput.setTipoCuenta("AHORRO");
-        cuentaInput.setSaldoInicial(new BigDecimal("500.00"));
-        cuentaInput.setEstado(true);
-        cuentaInput.setClienteId(1L);
+        CuentaEntity cuentaEntityInput = new CuentaEntity();
+        //cuentaEntityInput.setTipoCuenta("AHORRO");
+        cuentaEntityInput.setSaldoInicial(new BigDecimal("500.00"));
+        cuentaEntityInput.setEstado(true);
+        cuentaEntityInput.setClienteId(1L);
 
-        HttpEntity<Cuenta> entity = new HttpEntity<>(cuentaInput, headers);
+        HttpEntity<CuentaEntity> entity = new HttpEntity<>(cuentaEntityInput, headers);
 
         // Act
-        ResponseEntity<Cuenta> response = restTemplate.exchange(
+        ResponseEntity<CuentaEntity> response = restTemplate.exchange(
                 createURLWithPort("/cuentas/create"),
                 HttpMethod.POST,
                 entity,
-                Cuenta.class
+                CuentaEntity.class
         );
 
         // Assert
@@ -61,13 +61,13 @@ class MsCoreFinCuentasMovimientosApplicationTests {
     @Test
     void createCuenta_InvalidClient_ReturnsNotFound() {
         // Arrange
-        Cuenta cuentaInput = new Cuenta(); // Cliente no existe
-        cuentaInput.setClienteId(null);
-        //cuentaInput.setTipoCuenta("AHORRO");
-        cuentaInput.setSaldoInicial(new BigDecimal("500.00"));
-        cuentaInput.setEstado(true);
-        cuentaInput.setClienteId(999L);
-        HttpEntity<Cuenta> entity = new HttpEntity<>(cuentaInput, headers);
+        CuentaEntity cuentaEntityInput = new CuentaEntity(); // Cliente no existe
+        cuentaEntityInput.setClienteId(null);
+        //cuentaEntityInput.setTipoCuenta("AHORRO");
+        cuentaEntityInput.setSaldoInicial(new BigDecimal("500.00"));
+        cuentaEntityInput.setEstado(true);
+        cuentaEntityInput.setClienteId(999L);
+        HttpEntity<CuentaEntity> entity = new HttpEntity<>(cuentaEntityInput, headers);
 
         // Act
         ResponseEntity<String> response = restTemplate.exchange(

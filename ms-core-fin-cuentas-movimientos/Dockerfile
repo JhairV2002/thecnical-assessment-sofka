@@ -1,12 +1,11 @@
-# Etapa 1: Construir la aplicación
 FROM maven:3.8.5-openjdk-17 AS builder
 WORKDIR /app
-COPY /home/helldev/.m2/repository /root/.m2/repository
+RUN mkdir ".m2"
+RUN echo "<settings><servers><server><id>nexus</id><username>${NEXUS_USERNAME}</username><password>${NEXUS_PASSWORD}</password></server></servers></settings>" > .m2/settings.xml
 COPY pom.xml .
 COPY src ./src
 RUN mvn clean package -DskipTests
 
-# Etapa 2: Crear la imagen final
 FROM openjdk:17-jdk-slim
 WORKDIR /app
 COPY --from=builder /app/target/ms-core-fin-cuentas-movimientos-0.0.1-SNAPSHOT.jar app.jar
