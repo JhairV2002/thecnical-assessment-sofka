@@ -15,4 +15,5 @@ public class CuentaReqDTO implements Serializable {
     private String numCuenta;
     private CuentaTipo tipoCuenta;
     private BigDecimal saldoInicial;
+    private Long clienteId;
 }

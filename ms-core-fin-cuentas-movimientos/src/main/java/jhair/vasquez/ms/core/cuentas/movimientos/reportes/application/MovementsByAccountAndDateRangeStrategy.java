@@ -2,12 +2,12 @@ package jhair.vasquez.ms.core.cuentas.movimientos.reportes.application;
 
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.application.communication.KafkaProducer;
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.application.repository.CuentaRepository;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
+import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.domain.Movimiento;
 import jhair.vasquez.ms.core.cuentas.movimientos.reportes.infraestructure.dtos.CuentaConMovimientoDTO;
 import jhair.vasquez.ms.core.cuentas.movimientos.reportes.infraestructure.dtos.ReporteDTO;
-import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
 import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.application.repository.MovimientosRepository;
-import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.domain.Movimiento;
 import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
@@ -39,14 +39,14 @@ public class MovementsByAccountAndDateRangeStrategy implements ReporteStrategy {
         }
         log.info("Cliente con ID {} validado exitosamente", clienteId);
 
-        // Obtener todas las cuentas del cliente
-        List<Cuenta> cuentas = cuentaRepository.findCuentaByClienteId(clienteId)
-                .orElseThrow(() -> new RecordNotFound("No se encontraron cuentas para el cliente con ID " + clienteId));
+        // Obtener todas las cuentaEntities del cliente
+        List<Cuenta> cuentaEntities = cuentaRepository.findCuentaByClienteId(clienteId)
+                .orElseThrow(() -> new RecordNotFound("No se encontraron cuentaEntities para el cliente con ID " + clienteId));
 
         // Construir el reporte
-        List<CuentaConMovimientoDTO> cuentasConMovimientos = cuentas.stream()
+        List<CuentaConMovimientoDTO> cuentasConMovimientos = cuentaEntities.stream()
                 .map(cuenta -> {
-                    List<Movimiento> movimientos = movimientosRepository
+                    List<Movimiento> movimientoEntities = movimientosRepository
                             .findMovimientoByCuentaNumAndFechaBetween(cuenta.getNumCuenta(), fechaInicio, fechaFin);
 
                     BigDecimal saldoActual = movimientosRepository
@@ -57,9 +57,9 @@ public class MovementsByAccountAndDateRangeStrategy implements ReporteStrategy {
                             .orElse(cuenta.getSaldoInicial());
 
                     return CuentaConMovimientoDTO.builder()
-                            .cuenta(cuenta)
+                            .cuentaEntity(cuenta)
                             .saldoActual(saldoActual)
-                            .movimientos(movimientos)
+                            .movimientoEntities(movimientoEntities)
                             .build();
                 })
                 .collect(Collectors.toList());

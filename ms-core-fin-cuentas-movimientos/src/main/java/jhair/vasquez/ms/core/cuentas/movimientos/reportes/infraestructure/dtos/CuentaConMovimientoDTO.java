@@ -1,7 +1,9 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.reportes.infraestructure.dtos;
 
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.infraestructure.repository.CuentaEntity;
 import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.domain.Movimiento;
+import jhair.vasquez.ms.core.cuentas.movimientos.movimientos.infraestructure.repository.MovimientoEntity;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -16,7 +18,7 @@ import java.util.List;
 @AllArgsConstructor
 @NoArgsConstructor
 public class CuentaConMovimientoDTO implements Serializable {
-    private Cuenta cuenta;
+    private Cuenta cuentaEntity;
     private BigDecimal saldoActual; // Calculado desde el último movimiento
-    private List<Movimiento> movimientos; // Movimientos en el rango de fechas
+    private List<Movimiento> movimientoEntities; // Movimientos en el rango de fechas
 }

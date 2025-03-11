@@ -17,6 +17,13 @@
         <maven.compiler.target>${java.version}</maven.compiler.target>
     </properties>
 
+    <distributionManagement>
+        <repository>
+            <id>nexus</id>
+            <url>http://localhost:8081/repository/local-hosted-repo/</url>
+        </repository>
+    </distributionManagement>
+
     <dependencies>
         <!-- Lombok para anotaciones como @Data -->
         <dependency>

@@ -1,11 +1,12 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.cuentas.infraestructure.communication;
 
 import com.fasterxml.jackson.databind.ObjectMapper;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.KafkaCons;
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.application.repository.CuentaRepository;
 import jhair.vasquez.ms.core.dto.kafka.common.ClienteKafkaDeleteDTO;
 import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
-import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.infraestructure.repository.CuentaEntity;
 import lombok.AllArgsConstructor;
 import lombok.extern.slf4j.Slf4j;
 import org.apache.kafka.clients.consumer.ConsumerRecord;
@@ -50,7 +51,7 @@ public class KafkaConsumerClient {
                     cuentas.forEach(cuenta -> {
                         cuenta.setEstado(Boolean.FALSE);
                         cuentaRepository.save(cuenta);
-                        log.debug("Cuenta {} actualizada a estado FALSE", cuenta.getNumCuenta());
+                        log.debug("CuentaEntity {} actualizada a estado FALSE", cuenta.getNumCuenta());
                     });
                     log.info("Se actualizaron {} cuentas del clienteId {} a estado FALSE", cuentas.size(), clienteId);
                 },

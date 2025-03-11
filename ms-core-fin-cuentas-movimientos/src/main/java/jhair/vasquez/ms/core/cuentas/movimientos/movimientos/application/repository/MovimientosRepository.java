@@ -6,7 +6,7 @@ import java.util.Date;
 import java.util.List;
 
 public interface MovimientosRepository {
-    Movimiento save(Movimiento movimiento);
+    Movimiento save(Movimiento movimientoEntity);
     List<Movimiento> findAll();
     List<Movimiento> findAllByCuentaNum(String cuentaNum);
     List<Movimiento> findMovimientoByCuentaNumOrderByFechaDesc(String cuentaNum);

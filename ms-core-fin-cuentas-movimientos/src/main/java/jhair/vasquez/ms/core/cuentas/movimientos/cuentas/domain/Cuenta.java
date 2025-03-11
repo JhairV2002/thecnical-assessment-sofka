@@ -1,6 +1,9 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain;
 
-import jakarta.persistence.*;
+import jakarta.persistence.Column;
+import jakarta.persistence.EnumType;
+import jakarta.persistence.Enumerated;
+import jakarta.persistence.Id;
 import lombok.AllArgsConstructor;
 import lombok.Builder;
 import lombok.Data;
@@ -9,22 +12,13 @@ import lombok.NoArgsConstructor;
 import java.math.BigDecimal;
 
 @Data
-@Builder
-@Entity
 @AllArgsConstructor
 @NoArgsConstructor
-@Table(name = "cuentas", schema = "cuenta")
+@Builder
 public class Cuenta {
-    @Id
-    @Column(nullable = false, length = 10)
     private String numCuenta;
-    @Column(nullable = false)
-    @Enumerated(EnumType.STRING)
     private CuentaTipo tipoCuenta;
-    @Column(nullable = false, precision = 10, scale = 2)
     private BigDecimal saldoInicial;
-    @Column(nullable = false)
     private boolean estado;
-    @Column(nullable = false)
     private Long clienteId;
 }

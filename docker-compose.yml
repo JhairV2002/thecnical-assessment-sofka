@@ -39,9 +39,62 @@ services:
       - postgres_data:/var/lib/postgresql/data
     networks:
       - internal_bank_network
+      
+  nexus:
+    image: sonatype/nexus3:latest
+    ports:
+      - "8081:8081"
+    volumes:
+      - nexus_data:/nexus-data
+    networks:
+      - internal_bank_network
+
+  # Microservicio de Persona
+  ms-persona:
+    build:
+      context: ./ms-core-persona-cliente
+      dockerfile: Dockerfile
+      args:
+        - NEXUS_USERNAME=admin
+        - NEXUS_PASSWORD=Nacer500300
+    ports:
+      - "8080:8080"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://bank_db:5432/banco_db
+      - SPRING_DATASOURCE_USERNAME=bank
+      - SPRING_DATASOURCE_PASSWORD=JhairV2002
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      - bank_db
+      - kafka
+    networks:
+      - internal_bank_network
+
+  # Microservicio de Cuentas y Movimientos
+  ms-cuentas-movimientos:
+    build:
+      context: ./ms-core-fin-cuentas-movimientos
+      dockerfile: Dockerfile
+      args:
+        - NEXUS_USERNAME=admin
+        - NEXUS_PASSWORD=Nacer500300
+    ports:
+      - "8081:8082"
+    environment:
+      - SPRING_DATASOURCE_URL=jdbc:postgresql://bank_db:5432/banco_db
+      - SPRING_DATASOURCE_USERNAME=bank
+      - SPRING_DATASOURCE_PASSWORD=JhairV2002
+      - SPRING_KAFKA_BOOTSTRAP_SERVERS=kafka:9092
+    depends_on:
+      - bank_db
+      - kafka
+    networks:
+      - internal_bank_network
 
 volumes:
   postgres_data:
+  nexus_data:
+  
 
 networks:
   internal_bank_network:

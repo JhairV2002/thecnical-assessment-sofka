@@ -1,11 +1,12 @@
 package jhair.vasquez.ms.core.cuentas.movimientos.cuentas.application.service;
 
 
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.CuentaCons;
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.application.communication.KafkaProducer;
 import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.application.repository.CuentaRepository;
+import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.infraestructure.repository.CuentaEntity;
 import jhair.vasquez.ms.core.cuentas.movimientos.customExceptions.RecordNotFound;
-import jhair.vasquez.ms.core.cuentas.movimientos.cuentas.domain.Cuenta;
 import jhair.vasquez.ms.core.dto.kafka.persona.ClienteKafkaResDTO;
 import lombok.AllArgsConstructor;
 
@@ -21,7 +22,7 @@ public class CuentaServiceImpl implements CuentaService {
     @Override
     public Cuenta findByNumCuenta(String numCuenta) throws RecordNotFound {
         return cuentaRepository.findCuentaByNumCuenta(numCuenta)
-                .orElseThrow(() -> new RecordNotFound("No se encontró la cuenta con el número: " + numCuenta));
+                .orElseThrow(() -> new RecordNotFound("No se encontró la cuentaEntity con el número: " + numCuenta));
 
     }
 
@@ -31,14 +32,14 @@ public class CuentaServiceImpl implements CuentaService {
     }
 
     @Override
-    public Cuenta save(Cuenta cuenta) throws RecordNotFound {
+    public Cuenta save(Cuenta cuentaEntity) throws RecordNotFound {
         // Valido cliente con kafka
-        ClienteKafkaResDTO clienteResponse = kafkaClient.fetchCliente(cuenta.getClienteId());
+        ClienteKafkaResDTO clienteResponse = kafkaClient.fetchCliente(cuentaEntity.getClienteId());
         if (clienteResponse.getClienteId() == null) {
-            throw new RecordNotFound("No se encontró el cliente con el id: " + cuenta.getClienteId());
+            throw new RecordNotFound("No se encontró el cliente con el id: " + cuentaEntity.getClienteId());
         }
-        cuenta.setNumCuenta(generateNumCuenta(CuentaCons.CANT_DIG_NUM_CUENTA));
-        return cuentaRepository.save(cuenta);
+        cuentaEntity.setNumCuenta(generateNumCuenta(CuentaCons.CANT_DIG_NUM_CUENTA));
+        return cuentaRepository.save(cuentaEntity);
     }
 
     public String generateNumCuenta(int length) {
